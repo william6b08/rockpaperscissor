@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function computerPlay() {
+      const listOfOutcome = ["rock", "paper", "scissors"];
+      return listOfOutcome[Math.floor(Math.random()* listOfOutcome.length)];
+    }
+
+    function playRound(playerSelection, computerSelection)
+    {
+
+      if (playerSelection === computerSelection)
+      {
+        console.log ("You and computer both selected " + playerSelection+ ". That is a draw.")
+      }
+
+      else
+      {
+        if (playerSelection === "rock" && computerSelection ==="paper")
+        {
+          console.log(`Computer chose ${computerSelection}.`);
+          console.log("You lose! Paper beats rock.");
+          return false;
+        }
+
+        else if (playerSelection === "rock" && computerSelection ==="scissors")
+        {
+          console.log(`Computer chose ${computerSelection}.`);
+          console.log("You win! Rock beats scissors.");
+          return true;
+        }
+
+        else if (playerSelection === "paper" && computerSelection ==="rock")
+        {
+          console.log(`Computer chose ${computerSelection}.`);
+          console.log("You win! Paper beats rock.");
+          return true;
+        }
+
+        else if (playerSelection === "paper" && computerSelection ==="scissors")
+        {
+          console.log(`Computer chose ${computerSelection}.`);
+          console.log("You lose! scissors beat paper.");
+          return false;
+        }
+
+        else if (playerSelection === "scissors" && computerSelection ==="rock")
+        {
+          console.log(`Computer chose ${computerSelection}.`);
+          console.log("You lose! scissors beat rock.");
+          return false;
+        }
+
+        else if (playerSelection === "scissors" && computerSelection ==="paper")
+        {
+          console.log(`Computer chose ${computerSelection}.`);
+          console.log("You win! scissors beats paper.");
+          return true;
+        }
+      }
+    }
+
+    function game(numOfLoop=5) 
+    {
+      console.clear();
+      let playerScore = 0;
+      let computerScore = 0;
+      let choice = prompt("choose Rock, Paper or Scissors...");
+      const playerChoice = choice.toLowerCase();
+      console.log(playerChoice);
+
+      if (playerChoice == "rock" || playerChoice == "paper" || playerChoice == "scissors")
+      {
+        for (let i = 1; i <= numOfLoop; i ++)
+        {
+          let result = playRound(playerChoice, computerPlay());
+          if (result == false) {
+            computerScore += 1;
+          }
+          else {
+            playerScore += 1;
+          }
+        
+        }
+        console.log(`PlayerScore is ${playerScore} and ComputerScore is ${computerScore}`);
+
+        if (playerScore < computerScore)
+        {
+          console.log(`Computer beated you by ${computerScore - playerScore} rounds`);
+        }
+
+        else if (playerScore > computerScore)
+        {
+          console.log(`You beated computer by ${playerScore - computerScore} rounds`);
+        }
+
+        else if (playerScore == computerScore)
+        {
+          console.log("Nobody win!");
+        }
+      }
+      else {
+        alert("Invalid input!!");
+        game();
+      }
+    }
+  
+  
+
+    game();
+  </script>
+</body>
+</html>
