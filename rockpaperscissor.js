@@ -1,150 +1,93 @@
+let player_score = 0;
+let computer_score = 0;
+const result_Area = document.querySelector('.result');
+const annoucement_Area = document.querySelector('.annoucement');
+const player_Score_Area = document.querySelector('.player-score');
+const computer_Score_Area = document.querySelector('.computer-score');
+const rps_btns = document.querySelectorAll('button[name]');
+const reset_btn = document.querySelector('.restart');
 
-const output_Area = document.querySelector('.result');
-let player_Choice = '';
-function computerPlay() {
+function computerPlay() { //this run when playRound(e) get called, to get computer's option.
   const listOfOutcome = ["rock", "paper", "scissors"];
   return listOfOutcome[Math.floor(Math.random()* listOfOutcome.length)];
 }
 
-function rock_playRound()
-{
-  const playerSelection = 'rock';
+function restartGame() {
+  player_score = 0;
+  computer_score = 0;
+  annoucement_Area.innerText ='';
+}
 
-  const computerSelection = computerPlay();
-
-  if (playerSelection === computerSelection)
+function updateResult(){
+  if (player_score < 5 && computer_score < 5)
   {
-    output_Area.innerText = "You and computer both selected " + playerSelection+ ". That is a draw.";
+    player_Score_Area.innerText = `Player score: ${player_score}`;
+    computer_Score_Area.innerText = `Computer score: ${computer_score}`;
   }
+  else {
+    player_Score_Area.innerText = `Player score: ${player_score}`;
+    computer_Score_Area.innerText = `Computer score: ${computer_score}`;
+
+    if (computer_score >  player_score)
+  {
+    annoucement_Area.innerText = `Computer has defeated you by ${computer_score - player_score} points`;
+  }
+
+  else {annoucement_Area.innerText = `You have defeated computer by ${player_score - computer_score} points`;
+}
+
+  }
+}
+
+function playRound(e) //this take (e) event as parameter
+{
+  const playerSelection = e.target.name;
+  const computerSelection = computerPlay();
+  if (playerSelection === computerSelection) return;
 
   else
   {
     if (playerSelection === "rock" && computerSelection ==="paper")
     {
-      output_Area.innerText = `Computer chose ${computerSelection}.`;
-      output_Area.innerText += "You lose! Paper beats rock.";
-
+      computer_score ++;
     }
 
     else if (playerSelection === "rock" && computerSelection ==="scissors")
     {
-      output_Area.innerText = `Computer chose ${computerSelection}.`;
-      output_Area.innerText += "You win! Rock beats scissors.";
+
+      player_score ++;
 
     }
-  }
-}
 
-function paper_playRound()
-{
-  const playerSelection = 'paper';
-
-  const computerSelection = computerPlay();
-
-  if (playerSelection === computerSelection)
-  {
-    output_Area.innerText = "You and computer both selected " + playerSelection+ ". That is a draw.";
-  }
-
-  else 
-  {
-    if (playerSelection === "paper" && computerSelection ==="rock")
+    else if (playerSelection === "paper" && computerSelection ==="rock")
     {
-      output_Area.innerText = `Computer chose ${computerSelection}.`;
-      output_Area.innerText += "You win! Paper beats rock.";
+
+      player_score ++;
 
     }
 
     else if (playerSelection === "paper" && computerSelection ==="scissors")
     {
-      output_Area.innerText = `Computer chose ${computerSelection}.`;
-      output_Area.innerText += "You lose! scissors beat paper.";
-
+      computer_score ++;
     }
-  }
-}
-
-function scissors_playRound()
-{
-  const playerSelection = 'scissors';
-
-  const computerSelection = computerPlay();
-
-  if (playerSelection === computerSelection)
-  {
-    output_Area.innerText = "You and computer both selected " + playerSelection+ ". That is a draw.";
-  }
-
-  else
-  {
 
     if (playerSelection === "scissors" && computerSelection ==="rock")
     {
-      output_Area.innerText = `Computer chose ${computerSelection}.`;
-      output_Area.innerText += "You lose! scissors beat rock.";
-
+      computer_score ++;
     }
 
     else if (playerSelection === "scissors" && computerSelection ==="paper")
     {
-      output_Area.innerText = `Computer chose ${computerSelection}.`;
-      output_Area.innerText += "You win! scissors beats paper.";
+      player_score ++;
     }
   }
 }
 
+rps_btns.forEach((btn) => btn.addEventListener('click', updateResult));
+rps_btns.forEach((btn) => btn.addEventListener('click', playRound));
+reset_btn.addEventListener('click', restartGame);
+reset_btn.addEventListener('click', updateResult);
 
-function game() 
-{
-  console.clear();
-  let playerScore = 0;
-  let computerScore = 0;
-  let choice = prompt("choose Rock, Paper or Scissors...");
-  const playerChoice = choice.toLowerCase();
-  console.log(playerChoice);
-
-  if (playerChoice == "rock" || playerChoice == "paper" || playerChoice == "scissors")
-  {
-      let result = playRound(playerChoice, computerPlay());
-      if (result == false) {
-        computerScore += 1;
-      }
-      else {
-        playerScore += 1;
-      }
-    
-    console.log(`PlayerScore is ${playerScore} and ComputerScore is ${computerScore}`);
-
-    if (playerScore < computerScore)
-    {
-      console.log(`Computer beated you by ${computerScore - playerScore} rounds`);
-    }
-
-    else if (playerScore > computerScore)
-    {
-      console.log(`You beated computer by ${playerScore - computerScore} rounds`);
-    }
-
-    else if (playerScore == computerScore)
-    {
-      console.log("Nobody win!");
-    }
-  }
-  else {
-    alert("Invalid input!!");
-    game();
-  }
-}
-
-
-
-const rock_btn = document.querySelector('#rock_btn');
-const paper_btn = document.querySelector('#paper_btn');
-const scissors_btn = document.querySelector('#scissors_btn');
-
-rock_btn.addEventListener('click', rock_playRound);
-paper_btn.addEventListener('click', paper_playRound);
-scissors_btn.addEventListener('click', scissors_playRound);
 
 
 
